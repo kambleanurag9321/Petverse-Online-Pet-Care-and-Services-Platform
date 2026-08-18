@@ -1,0 +1,146 @@
+.add-pet-page {
+  min-height: calc(100vh - 70px);
+  padding: 50px 20px;
+  background: linear-gradient(135deg, #f8f9ff, #eef7ff);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.add-pet-container {
+  width: 100%;
+  max-width: 700px;
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+}
+
+.add-pet-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pet-icon {
+  display: inline-flex;
+  width: 65px;
+  height: 65px;
+  align-items: center;
+  justify-content: center;
+  background: #eef2ff;
+  border-radius: 50%;
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.add-pet-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #20242d;
+}
+
+.add-pet-header p {
+  margin-top: 8px;
+  color: #777;
+  font-size: 15px;
+}
+
+.add-pet-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  background: #fafafa;
+  transition: 0.2s;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #6c63ff;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.add-pet-btn {
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  background: #6c63ff;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  margin-top: 5px;
+}
+
+.add-pet-btn:hover {
+  background: #574fd6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.25);
+}
+
+.add-pet-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error-message {
+  background: #fff0f0;
+  color: #d93025;
+  border: 1px solid #ffd1d1;
+  padding: 12px 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .add-pet-container {
+    padding: 25px 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .add-pet-header h1 {
+    font-size: 27px;
+  }
+}

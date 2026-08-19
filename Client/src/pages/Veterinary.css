@@ -1,0 +1,671 @@
+.veterinary-page {
+  min-height: 100vh;
+  background: #faf9f7;
+  color: #242424;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.vet-hero {
+  min-height: 600px;
+  padding: 80px 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+  background:
+    radial-gradient(circle at 85% 25%, #ffe4c9 0, transparent 28%),
+    linear-gradient(135deg, #fff8ef, #fff);
+}
+
+.vet-hero-content {
+  max-width: 620px;
+  z-index: 2;
+}
+
+.vet-badge {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 30px;
+  background: #fff;
+  color: #e47736;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+  margin-bottom: 22px;
+}
+
+.vet-hero h1 {
+  font-size: clamp(44px, 6vw, 72px);
+  line-height: 1.02;
+  margin: 0;
+  letter-spacing: -3px;
+}
+
+.vet-hero h1 span {
+  color: #e47736;
+  display: block;
+}
+
+.vet-hero p {
+  margin-top: 25px;
+  color: #6f6f6f;
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 550px;
+}
+
+.vet-hero-buttons {
+  display: flex;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.vet-primary-btn,
+.vet-secondary-btn {
+  padding: 15px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.vet-primary-btn {
+  border: none;
+  background: #e47736;
+  color: white;
+  box-shadow: 0 10px 25px rgba(228, 119, 54, 0.25);
+}
+
+.vet-primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(228, 119, 54, 0.35);
+}
+
+.vet-secondary-btn {
+  border: 1px solid #ddd;
+  background: white;
+  color: #333;
+}
+
+.vet-secondary-btn:hover {
+  transform: translateY(-3px);
+}
+
+/* HERO VISUAL */
+
+.vet-hero-visual {
+  width: 430px;
+  height: 430px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vet-circle {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffbd83, #e47736);
+  box-shadow:
+    0 30px 70px rgba(228, 119, 54, 0.25),
+    inset 0 0 0 15px rgba(255, 255, 255, 0.25);
+}
+
+.vet-pet-card {
+  position: absolute;
+  bottom: 80px;
+  left: 20px;
+  right: 20px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.14);
+}
+
+.vet-pet-icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  background: #fff0df;
+}
+
+.vet-pet-card strong,
+.vet-pet-card span {
+  display: block;
+}
+
+.vet-pet-card span {
+  margin-top: 4px;
+  color: #777;
+  font-size: 13px;
+}
+
+.health-check {
+  margin-left: auto;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #dff6e7;
+  color: #269653;
+  font-weight: bold;
+}
+
+.floating-card {
+  position: absolute;
+  padding: 13px 18px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  font-size: 22px;
+  animation: floating 3s ease-in-out infinite;
+}
+
+.floating-card span {
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 7px;
+}
+
+.vet-card-one {
+  top: 35px;
+  right: 5px;
+}
+
+.vet-card-two {
+  bottom: 20px;
+  right: 25px;
+  animation-delay: 1s;
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* =========================
+   STATS
+========================= */
+
+.vet-stats {
+  background: #242424;
+  color: white;
+  padding: 30px 8%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+}
+
+.vet-stats div {
+  padding: 10px;
+  border-right: 1px solid #444;
+}
+
+.vet-stats div:last-child {
+  border-right: none;
+}
+
+.vet-stats strong,
+.vet-stats span {
+  display: block;
+}
+
+.vet-stats strong {
+  font-size: 30px;
+  color: #ffad72;
+}
+
+.vet-stats span {
+  margin-top: 5px;
+  color: #bbb;
+  font-size: 13px;
+}
+
+/* =========================
+   SECTION HEADING
+========================= */
+
+.section-heading {
+  max-width: 650px;
+  margin: 0 auto 55px;
+  text-align: center;
+}
+
+.section-heading > span {
+  color: #e47736;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.section-heading h2 {
+  margin: 12px 0;
+  font-size: 44px;
+  letter-spacing: -1.5px;
+}
+
+.section-heading em {
+  color: #e47736;
+  font-style: normal;
+}
+
+.section-heading p {
+  color: #777;
+  line-height: 1.7;
+}
+
+/* =========================
+   SERVICES
+========================= */
+
+.vet-services {
+  padding: 100px 8%;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.service-card {
+  padding: 30px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 22px;
+  transition: 0.3s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #fff2e6;
+  right: -40px;
+  top: -40px;
+}
+
+.service-card:hover,
+.service-selected {
+  transform: translateY(-8px);
+  border-color: #f2bd93;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.09);
+}
+
+.service-icon {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  background: #fff0df;
+  font-size: 30px;
+  margin-bottom: 22px;
+}
+
+.service-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.service-card p {
+  color: #777;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.service-card button {
+  margin-top: 15px;
+  border: none;
+  background: none;
+  color: #e47736;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================
+   APPOINTMENT
+========================= */
+
+.vet-appointment {
+  margin: 20px 8% 100px;
+  padding: 70px;
+  border-radius: 30px;
+  background: #242424;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+.appointment-content {
+  max-width: 600px;
+}
+
+.appointment-content > span {
+  color: #ffad72;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.appointment-content h2 {
+  font-size: 46px;
+  line-height: 1.1;
+  margin: 15px 0;
+}
+
+.appointment-content p {
+  color: #bbb;
+  line-height: 1.7;
+}
+
+.appointment-content button {
+  margin-top: 20px;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 12px;
+  background: #e47736;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.appointment-visual {
+  width: 300px;
+  height: 250px;
+  position: relative;
+}
+
+.appointment-circle {
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  background: #ffad72;
+  display: grid;
+  place-items: center;
+  font-size: 100px;
+}
+
+.appointment-bubble {
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: white;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.bubble-one {
+  top: 10px;
+  right: 25px;
+}
+
+.bubble-two {
+  bottom: 20px;
+  right: 10px;
+}
+
+.bubble-three {
+  top: 90px;
+  right: -15px;
+}
+
+/* =========================
+   DOCTORS
+========================= */
+
+.vet-doctors {
+  padding: 50px 8% 100px;
+}
+
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.doctor-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 22px;
+  padding: 25px;
+  transition: 0.3s;
+}
+
+.doctor-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.doctor-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  background: #fff0df;
+  font-size: 43px;
+}
+
+.doctor-online {
+  color: #279957;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.doctor-info {
+  margin-top: 20px;
+}
+
+.doctor-info h3 {
+  margin: 7px 0;
+  font-size: 20px;
+}
+
+.doctor-info p {
+  margin: 0;
+  color: #777;
+}
+
+.doctor-info small {
+  display: block;
+  margin-top: 12px;
+  color: #999;
+}
+
+.doctor-card button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid #e47736;
+  background: transparent;
+  color: #e47736;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.doctor-card button:hover {
+  background: #e47736;
+  color: white;
+}
+
+/* =========================
+   HEALTH TIPS
+========================= */
+
+.vet-tips {
+  margin: 0 8% 80px;
+  padding: 60px;
+  border-radius: 28px;
+  background: linear-gradient(120deg, #fff0df, #ffe4c9);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tips-content {
+  max-width: 600px;
+}
+
+.tips-content > span {
+  color: #c35e20;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.tips-content h2 {
+  font-size: 42px;
+  line-height: 1.1;
+  margin: 15px 0;
+}
+
+.tips-content p {
+  color: #666;
+  line-height: 1.7;
+}
+
+.tips-content button {
+  margin-top: 15px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #242424;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tips-pet {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: white;
+  display: grid;
+  place-items: center;
+  font-size: 100px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+  .vet-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 50px;
+  }
+
+  .vet-hero p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vet-hero-buttons {
+    justify-content: center;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .doctors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vet-appointment {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 650px) {
+  .vet-hero {
+    padding: 60px 5%;
+  }
+
+  .vet-hero h1 {
+    font-size: 45px;
+  }
+
+  .vet-hero-buttons {
+    flex-direction: column;
+  }
+
+  .vet-hero-visual {
+    transform: scale(0.8);
+  }
+
+  .vet-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vet-stats div {
+    border-right: none;
+    border-bottom: 1px solid #444;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vet-services,
+  .vet-doctors {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .vet-appointment,
+  .vet-tips {
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 35px 25px;
+  }
+
+  .appointment-content h2,
+  .tips-content h2,
+  .section-heading h2 {
+    font-size: 34px;
+  }
+
+  .appointment-visual {
+    transform: scale(0.8);
+  }
+
+  .tips-pet {
+    display: none;
+  }
+}

@@ -1,14 +1,14 @@
-const express = require("express");
+import express from "express";
 
-const {
+import {
   addPet,
   getMyPets,
   getPetById,
   updatePet,
   deletePet,
-} = require("../controllers/petController");
+} from "../controllers/petController.js";
 
-const protect = require("../middleware/authMiddleware");
+import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -30,4 +30,4 @@ router.put("/:id", updatePet);
 // Delete pet
 router.delete("/:id", deletePet);
 
-module.exports = router;
+export default router;

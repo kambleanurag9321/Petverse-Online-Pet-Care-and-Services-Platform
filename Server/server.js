@@ -7,9 +7,6 @@ import petRoutes from "./routes/petRoutes.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();
-const petRoutes = require("./routes/petRoutes");
-
-app.use("/api/pets", petRoutes);
 
 const app = express();
 

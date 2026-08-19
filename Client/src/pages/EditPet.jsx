@@ -1,29 +1,71 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "./AddPet.css";
 import { apiRequest } from "../services/api";
 
-function AddPet() {
+function EditPet() {
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
     species: "",
     breed: "",
-    gender: "",
+    gender: "Unknown",
     dateOfBirth: "",
     weight: "",
     medicalInfo: "",
+    notes: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  // Load existing pet
+  useEffect(() => {
+    const fetchPet = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          navigate("/login");
+          return;
+        }
+
+        const pet = await apiRequest(`/pets/${id}`);
+
+        setFormData({
+          name: pet.name || "",
+          species: pet.species || "",
+          breed: pet.breed || "",
+          gender: pet.gender || "Unknown",
+          dateOfBirth: pet.dateOfBirth
+            ? pet.dateOfBirth.substring(0, 10)
+            : "",
+          weight:
+            pet.weight !== undefined && pet.weight !== null
+              ? pet.weight
+              : "",
+          medicalInfo: pet.medicalInfo || "",
+          notes: pet.notes || "",
+        });
+      } catch (err) {
+        console.error("Fetch pet error:", err);
+        setError(err.message || "Failed to load pet");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPet();
+  }, [id, navigate]);
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
 
     setError("");
   };
@@ -31,7 +73,7 @@ function AddPet() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
+    setSaving(true);
     setError("");
 
     try {
@@ -42,39 +84,79 @@ function AddPet() {
         return;
       }
 
-      await apiRequest("/pets", {
-        method: "POST",
+      await apiRequest(`/pets/${id}`, {
+        method: "PUT",
         body: {
-          ...formData,
+          name: formData.name,
+          species: formData.species,
+          breed: formData.breed,
+          gender: formData.gender,
+          dateOfBirth: formData.dateOfBirth || undefined,
           weight: formData.weight
             ? Number(formData.weight)
             : undefined,
-          dateOfBirth: formData.dateOfBirth || undefined,
+          medicalInfo: formData.medicalInfo,
+          notes: formData.notes,
         },
       });
 
-      alert("Pet added successfully! 🐾");
+      alert("Pet updated successfully! 🐾");
 
-      navigate("/pets");
+      navigate(`/pets/${id}`);
     } catch (err) {
-      console.error("Add pet error:", err);
-      setError(err.message || "Failed to add pet");
+      console.error("Update pet error:", err);
+      setError(err.message || "Failed to update pet");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="add-pet-page">
+        <div className="add-pet-container">
+          <div className="add-pet-header">
+            <span className="pet-icon">🐾</span>
+            <h1>Loading Pet...</h1>
+            <p>Please wait while we load the pet information.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && !formData.name) {
+    return (
+      <div className="add-pet-page">
+        <div className="add-pet-container">
+          <div className="add-pet-header">
+            <span className="pet-icon">⚠️</span>
+            <h1>Unable to load pet</h1>
+            <p>{error}</p>
+          </div>
+
+          <button
+            className="add-pet-btn"
+            onClick={() => navigate("/pets")}
+          >
+            ← Back to My Pets
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="add-pet-page">
       <div className="add-pet-container">
 
         <div className="add-pet-header">
-          <span className="pet-icon">🐾</span>
+          <span className="pet-icon">✏️</span>
 
-          <h1>Add Your Pet</h1>
+          <h1>Edit Pet</h1>
 
           <p>
-            Tell us a little about your furry friend.
+            Update {formData.name}'s information.
           </p>
         </div>
 
@@ -89,7 +171,7 @@ function AddPet() {
           className="add-pet-form"
         >
 
-          {/* PET NAME */}
+          {/* NAME */}
           <div className="form-group">
             <label>Pet Name</label>
 
@@ -115,10 +197,7 @@ function AddPet() {
                 onChange={handleChange}
                 required
               >
-                <option value="">
-                  Select species
-                </option>
-
+                <option value="">Select species</option>
                 <option value="Dog">Dog</option>
                 <option value="Cat">Cat</option>
                 <option value="Bird">Bird</option>
@@ -136,10 +215,6 @@ function AddPet() {
                 onChange={handleChange}
                 required
               >
-                <option value="">
-                  Select gender
-                </option>
-
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Unknown">Unknown</option>
@@ -148,7 +223,7 @@ function AddPet() {
 
           </div>
 
-          {/* BREED + DATE OF BIRTH */}
+          {/* BREED + DOB */}
           <div className="form-row">
 
             <div className="form-group">
@@ -204,16 +279,48 @@ function AddPet() {
             />
           </div>
 
-          {/* SUBMIT */}
-          <button
-            type="submit"
-            className="add-pet-btn"
-            disabled={loading}
+          {/* NOTES */}
+          <div className="form-group">
+            <label>Notes</label>
+
+            <textarea
+              name="notes"
+              placeholder="Any additional information about your pet..."
+              rows="4"
+              value={formData.notes}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* BUTTONS */}
+          <div
+            style={{
+              display: "flex",
+              gap: "12px",
+            }}
           >
-            {loading
-              ? "Adding Pet..."
-              : "🐾 Add Pet"}
-          </button>
+            <button
+              type="button"
+              className="add-pet-btn"
+              style={{
+                background: "#eee",
+                color: "#555",
+              }}
+              onClick={() => navigate(`/pets/${id}`)}
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              className="add-pet-btn"
+              disabled={saving}
+            >
+              {saving
+                ? "Saving..."
+                : "💾 Save Changes"}
+            </button>
+          </div>
 
         </form>
       </div>
@@ -221,4 +328,4 @@ function AddPet() {
   );
 }
 
-export default AddPet;
+export default EditPet;

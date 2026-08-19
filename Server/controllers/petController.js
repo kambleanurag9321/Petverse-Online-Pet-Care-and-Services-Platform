@@ -1,16 +1,33 @@
-const Pet = require("../models/Pet");
+import Pet from "../models/Pet.js";
 
 // Add pet
 const addPet = async (req, res) => {
   try {
-    const { name, type, breed, age } = req.body;
+    const {
+      name,
+      species,
+      breed,
+      gender,
+      dateOfBirth,
+      weight,
+      profileImage,
+      medicalInfo,
+      vaccinations,
+      notes,
+    } = req.body;
 
     const pet = await Pet.create({
-      name,
-      type,
-      breed,
-      age,
       owner: req.user.id,
+      name,
+      species,
+      breed,
+      gender,
+      dateOfBirth,
+      weight,
+      profileImage,
+      medicalInfo,
+      vaccinations,
+      notes,
     });
 
     res.status(201).json({
@@ -18,6 +35,8 @@ const addPet = async (req, res) => {
       pet,
     });
   } catch (error) {
+    console.error("Add pet error:", error);
+
     res.status(500).json({
       message: "Failed to add pet",
       error: error.message,
@@ -30,10 +49,12 @@ const getMyPets = async (req, res) => {
   try {
     const pets = await Pet.find({
       owner: req.user.id,
-    });
+    }).sort({ createdAt: -1 });
 
     res.status(200).json(pets);
   } catch (error) {
+    console.error("Get pets error:", error);
+
     res.status(500).json({
       message: "Failed to fetch pets",
       error: error.message,
@@ -57,6 +78,8 @@ const getPetById = async (req, res) => {
 
     res.status(200).json(pet);
   } catch (error) {
+    console.error("Get pet error:", error);
+
     res.status(500).json({
       message: "Failed to fetch pet",
       error: error.message,
@@ -90,6 +113,8 @@ const updatePet = async (req, res) => {
       pet,
     });
   } catch (error) {
+    console.error("Update pet error:", error);
+
     res.status(500).json({
       message: "Failed to update pet",
       error: error.message,
@@ -115,14 +140,15 @@ const deletePet = async (req, res) => {
       message: "Pet deleted successfully",
     });
   } catch (error) {
+    console.error("Delete pet error:", error);
+
     res.status(500).json({
       message: "Failed to delete pet",
       error: error.message,
     });
   }
 };
-
-module.exports = {
+export {
   addPet,
   getMyPets,
   getPetById,

@@ -13,7 +13,11 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://petverse-online-pet-care-and-servic.vercel.app",
+    ],
+    credentials: true,
   })
 );
 
@@ -33,9 +37,13 @@ app.get("/", (req, res) => {
   });
 });
 
-// Server
+// Local development
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`PetVerse server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`PetVerse server running on port ${PORT}`);
+  });
+}
+
+export default app;

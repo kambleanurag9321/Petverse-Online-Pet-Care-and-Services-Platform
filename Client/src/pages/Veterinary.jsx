@@ -2,7 +2,8 @@ import { useState } from "react";
 import "./Veterinary.css";
 
 function Veterinary() {
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedService, setSelectedService] = useState("General Checkup");
+  const [locationLoading, setLocationLoading] = useState(false);
 
   const services = [
     {
@@ -34,310 +35,330 @@ function Veterinary() {
   const vets = [
     {
       name: "Dr. Sarah Wilson",
-      specialty: "Veterinary Physician",
+      specialization: "Veterinary Physician",
       experience: "8+ Years Experience",
       icon: "👩‍⚕️",
     },
     {
       name: "Dr. Michael Brown",
-      specialty: "Pet Surgeon",
+      specialization: "Pet Surgeon",
       experience: "10+ Years Experience",
       icon: "👨‍⚕️",
     },
     {
       name: "Dr. Emily Davis",
-      specialty: "Animal Nutritionist",
+      specialization: "Animal Nutritionist",
       experience: "6+ Years Experience",
       icon: "👩‍⚕️",
     },
   ];
 
+  const stats = [
+    { number: "500+", label: "Pets Helped" },
+    { number: "50+", label: "Veterinarians" },
+    { number: "24/7", label: "Emergency Support" },
+    { number: "98%", label: "Happy Pet Parents" },
+  ];
+
+  const findVeterinarians = () => {
+    // Open a tab immediately so that the browser does not block the popup.
+    const mapWindow = window.open("about:blank", "_blank");
+
+    if (!mapWindow) {
+      alert(
+        "Your browser blocked the new tab. Please allow pop-ups for this website and try again."
+      );
+      return;
+    }
+
+    setLocationLoading(true);
+
+    const openMaps = (query) => {
+      mapWindow.location.href =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(query);
+
+      setLocationLoading(false);
+    };
+
+    // If location permission is unavailable, use Google's nearby search.
+    if (!navigator.geolocation) {
+      openMaps("veterinary clinics near me");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        openMaps(
+          `veterinary clinics near ${latitude},${longitude}`
+        );
+      },
+      (error) => {
+        console.error("Location error:", error);
+
+        openMaps("veterinary clinics near me");
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000,
+      }
+    );
+  };
+
+  const handleAppointment = () => {
+    alert(
+      `You selected ${selectedService}. Appointment booking will be available soon!`
+    );
+  };
+
+  const handleDoctorAppointment = (doctorName) => {
+    alert(`Appointment booking with ${doctorName} will be available soon!`);
+  };
+
+  const handleHealthTips = () => {
+    alert(
+      "Remember to provide your pet with regular exercise, fresh water, healthy food, and routine veterinary checkups!"
+    );
+  };
+
   return (
     <div className="veterinary-page">
-
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section className="vet-hero">
-
         <div className="vet-hero-content">
-          <span className="vet-badge">
-            🐾 PetVerse Veterinary Care
-          </span>
+          <span className="vet-badge">🐾 Professional Pet Healthcare</span>
 
           <h1>
-            Because every pet
-            <span> deserves great care.</span>
+            Your Pet's Health,
+            <br />
+            <span>Our Priority.</span>
           </h1>
 
           <p>
-            Find trusted veterinary services, experienced professionals,
-            and helpful healthcare resources for your beloved companion.
+            Give your furry friends the care they deserve. Connect with
+            veterinary professionals and keep your pets healthy, happy,
+            and protected.
           </p>
 
           <div className="vet-hero-buttons">
             <button
               className="vet-primary-btn"
-              onClick={() =>
-                document
-                  .getElementById("vet-services")
-                  .scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={handleAppointment}
             >
-              Explore Services →
+              Book Appointment →
             </button>
 
             <button
               className="vet-secondary-btn"
-              onClick={() =>
-                document
-                  .getElementById("vet-doctors")
-                  .scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={findVeterinarians}
             >
-              Find a Veterinarian
+              📍 Find Nearby Vets
             </button>
           </div>
         </div>
 
         <div className="vet-hero-visual">
-          <div className="vet-circle"></div>
-
-          <div className="vet-pet-card">
-            <div className="vet-pet-icon">🐶</div>
-
-            <div>
-              <strong>Buddy</strong>
-              <span>Healthy & Happy</span>
+          <div className="vet-circle">
+            <div className="vet-pet-card">
+              <span className="vet-pet-icon">🐶</span>
+              <h3>Healthy Pets</h3>
+              <p>Happy Lives ❤️</p>
             </div>
 
-            <div className="health-check">
-              ✓
-            </div>
+            <div className="health-check">🩺</div>
           </div>
 
           <div className="floating-card vet-card-one">
-            💉
-            <span>Vaccination</span>
+            ❤️ Healthy
           </div>
 
           <div className="floating-card vet-card-two">
-            ❤️
-            <span>Healthy Pet</span>
+            🐾 Pet Care
           </div>
         </div>
-
       </section>
 
-      {/* STATS */}
+      {/* STATS SECTION */}
       <section className="vet-stats">
-
-        <div>
-          <strong>500+</strong>
-          <span>Pets Helped</span>
-        </div>
-
-        <div>
-          <strong>50+</strong>
-          <span>Veterinarians</span>
-        </div>
-
-        <div>
-          <strong>24/7</strong>
-          <span>Emergency Support</span>
-        </div>
-
-        <div>
-          <strong>98%</strong>
-          <span>Happy Pet Parents</span>
-        </div>
-
+        {stats.map((stat, index) => (
+          <div className="stat-item" key={index}>
+            <h2>{stat.number}</h2>
+            <p>{stat.label}</p>
+          </div>
+        ))}
       </section>
 
-      {/* SERVICES */}
-      <section className="vet-services" id="vet-services">
-
+      {/* SERVICES SECTION */}
+      <section className="vet-services">
         <div className="section-heading">
-          <span>WHAT WE OFFER</span>
-
-          <h2>
-            Complete care for
-            <em> every companion.</em>
-          </h2>
-
+          <span>OUR SERVICES</span>
+          <h2>Complete Care for Your Pets</h2>
           <p>
-            From routine checkups to specialized treatment, PetVerse
-            helps you find the right care for your pet.
+            Everything your pet needs to live a healthy and comfortable life.
           </p>
         </div>
 
         <div className="services-grid">
-
           {services.map((service, index) => (
             <div
               className={`service-card ${
-                selectedService === service.title
-                  ? "service-selected"
-                  : ""
+                selectedService === service.title ? "service-selected" : ""
               }`}
               key={index}
               onClick={() => setSelectedService(service.title)}
             >
-              <div className="service-icon">
-                {service.icon}
-              </div>
+              <div className="service-icon">{service.icon}</div>
 
               <h3>{service.title}</h3>
 
               <p>{service.description}</p>
 
-              <button>
-                Learn More →
+              <button
+                type="button"
+                onClick={() => setSelectedService(service.title)}
+              >
+                Select Service →
               </button>
             </div>
           ))}
-
         </div>
-
       </section>
 
-      {/* APPOINTMENT */}
+      {/* APPOINTMENT SECTION */}
       <section className="vet-appointment">
-
         <div className="appointment-content">
+          <span>BOOK AN APPOINTMENT</span>
 
-          <span>📅 QUICK APPOINTMENT</span>
-
-          <h2>
-            Your pet's health
-            <br />
-            shouldn't have to wait.
-          </h2>
+          <h2>Give Your Pet the Care They Deserve</h2>
 
           <p>
-            Book a veterinary consultation and get professional
-            guidance for your pet.
+            Regular veterinary visits help prevent health problems and
+            ensure your pet stays healthy.
           </p>
 
-          <button
-            onClick={() =>
-              alert("Online appointment booking coming soon! 🐾")
-            }
-          >
-            Book an Appointment →
-          </button>
+          <div className="appointment-selection">
+            <label htmlFor="vet-service">Choose a service:</label>
 
+            <select
+              id="vet-service"
+              value={selectedService}
+              onChange={(event) => setSelectedService(event.target.value)}
+            >
+              {services.map((service) => (
+                <option key={service.title} value={service.title}>
+                  {service.title}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            className="vet-primary-btn"
+            onClick={handleAppointment}
+          >
+            Book Your Appointment →
+          </button>
         </div>
 
         <div className="appointment-visual">
           <div className="appointment-circle">
-            🐕
+            <span>🐕</span>
           </div>
 
-          <div className="appointment-bubble bubble-one">
-            🩺
-          </div>
-
-          <div className="appointment-bubble bubble-two">
-            ❤️
-          </div>
-
-          <div className="appointment-bubble bubble-three">
-            🐾
-          </div>
+          <div className="appointment-bubble bubble-one">❤️</div>
+          <div className="appointment-bubble bubble-two">🩺</div>
+          <div className="appointment-bubble bubble-three">🐾</div>
         </div>
-
       </section>
 
-      {/* DOCTORS */}
-      <section className="vet-doctors" id="vet-doctors">
-
+      {/* DOCTORS SECTION */}
+      <section className="vet-doctors">
         <div className="section-heading">
-          <span>MEET THE EXPERTS</span>
-
-          <h2>
-            Trusted veterinary
-            <em> professionals.</em>
-          </h2>
-
+          <span>OUR PROFESSIONALS</span>
+          <h2>Meet Our Veterinary Experts</h2>
           <p>
-            Experienced professionals dedicated to keeping your pets
-            healthy and comfortable.
+            Dedicated professionals who care about your pet's health.
           </p>
         </div>
 
         <div className="doctors-grid">
-
           {vets.map((vet, index) => (
             <div className="doctor-card" key={index}>
-
               <div className="doctor-avatar">
-                {vet.icon}
+                <span>{vet.icon}</span>
               </div>
 
               <div className="doctor-info">
-
-                <span className="doctor-online">
-                  ● Available
-                </span>
+                <span className="doctor-online">● Available</span>
 
                 <h3>{vet.name}</h3>
 
-                <p>{vet.specialty}</p>
+                <p>{vet.specialization}</p>
 
-                <small>
-                  ⭐ 4.9 &nbsp; • &nbsp; {vet.experience}
-                </small>
-
+                <small>{vet.experience}</small>
               </div>
 
               <button
-                onClick={() =>
-                  alert(`Booking with ${vet.name} coming soon!`)
-                }
+                onClick={() => handleDoctorAppointment(vet.name)}
               >
-                Book Visit
+                Book Appointment →
               </button>
-
             </div>
           ))}
-
         </div>
 
+        {/* GOOGLE MAPS NEARBY VET SEARCH */}
+        <div className="vet-map-search">
+          <div>
+            <span>📍 FIND A VET NEAR YOU</span>
+            <h2>Looking for a nearby veterinary clinic?</h2>
+            <p>
+              Find veterinary clinics, animal hospitals, and pet doctors
+              around your current location using Google Maps.
+            </p>
+          </div>
+
+          <button
+            className="vet-primary-btn map-button"
+            onClick={findVeterinarians}
+            disabled={locationLoading}
+          >
+            {locationLoading
+              ? "Finding Clinics..."
+              : "📍 Find Nearby Vets on Google Maps →"}
+          </button>
+        </div>
       </section>
 
-      {/* HEALTH TIPS */}
+      {/* HEALTH TIPS SECTION */}
       <section className="vet-tips">
-
         <div className="tips-content">
+          <span>HEALTH & WELLNESS</span>
 
-          <span>💡 PET HEALTH TIP</span>
-
-          <h2>
-            Prevention is better
-            <br />
-            than treatment.
-          </h2>
+          <h2>Small Steps, Healthier Pets</h2>
 
           <p>
-            Regular checkups, vaccinations, proper nutrition, and
-            exercise can help your pet live a longer and happier life.
+            A healthy pet starts with good habits. Provide balanced
+            nutrition, regular exercise, fresh water, and routine
+            veterinary checkups.
           </p>
 
           <button
-            onClick={() =>
-              alert("Pet health resources coming soon! 🐾")
-            }
+            className="vet-primary-btn"
+            onClick={handleHealthTips}
           >
-            Explore Pet Health Tips →
+            Explore Health Tips →
           </button>
-
         </div>
 
         <div className="tips-pet">
           🐱
         </div>
-
       </section>
-
     </div>
   );
 }

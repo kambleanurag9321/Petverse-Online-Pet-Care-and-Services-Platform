@@ -1,0 +1,199 @@
+.nearby-vets {
+  max-width: 1200px;
+  margin: 70px auto;
+  padding: 45px 25px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #effbf7, #f4f0ff);
+}
+
+.nearby-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.nearby-header > span {
+  color: #32a995;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.nearby-header h2 {
+  font-size: 36px;
+  color: #25263e;
+  margin: 15px 0;
+}
+
+.nearby-header h2 span {
+  color: #ff795e;
+}
+
+.nearby-header p {
+  color: #77798b;
+}
+
+.nearby-search {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.radius-select {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radius-select label {
+  font-weight: 700;
+  color: #34354c;
+}
+
+.radius-select select {
+  padding: 13px 18px;
+  border: 1px solid #e5e2ed;
+  border-radius: 12px;
+  background: white;
+}
+
+.nearby-search button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #ff795e, #ffad68);
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.nearby-search button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px #ff795e40;
+}
+
+.nearby-search button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.nearby-error {
+  text-align: center;
+  color: #c44c4c;
+  padding: 20px;
+}
+
+.nearby-results h3 {
+  margin: 25px 0;
+  color: #25263e;
+}
+
+.nearby-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.nearby-card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid #eee;
+  box-shadow: 0 10px 25px #25263e0b;
+  transition: .3s;
+}
+
+.nearby-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 15px 35px #25263e18;
+}
+
+.nearby-card-icon {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.nearby-card h3 {
+  font-size: 19px;
+  margin: 8px 0;
+}
+
+.nearby-card p {
+  font-size: 14px;
+  color: #77798b;
+  min-height: 40px;
+}
+
+.nearby-distance {
+  color: #269c89;
+  font-weight: 800;
+  margin: 15px 0;
+}
+
+.nearby-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nearby-actions a {
+  flex: 1;
+  text-align: center;
+  padding: 11px;
+  background: #fff0e9;
+  color: #e66f56;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nearby-actions a:hover {
+  background: #ff795e;
+  color: white;
+}
+
+@media(max-width:600px) {
+  .nearby-header h2 {
+    font-size: 27px;
+  }
+
+  .nearby-search {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .nearby-search button {
+    width: 100%;
+  }
+}
+.nearby-map-section {
+  margin: 35px 0;
+}
+
+.nearby-map-section h3 {
+  font-size: 24px;
+  color: #25263e;
+  margin-bottom: 10px;
+}
+
+.nearby-map-section p {
+  color: #77798b;
+  margin-bottom: 20px;
+}
+
+.nearby-map-section .leaflet-container {
+  z-index: 1;
+  box-shadow: 0 12px 35px rgba(0,0,0,.08);
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+}
+
+.leaflet-popup-content a {
+  color: #e66f56;
+  font-weight: 700;
+}

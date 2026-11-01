@@ -1,9 +1,13 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { apiRequest } from "../services/api";
+import { useAuth } from "../context/useAuth";
 import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -27,7 +31,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
+    if (!formData.email.trim() || !formData.password) {
       setError("Please enter your email and password.");
       return;
     }
@@ -36,41 +40,33 @@ function Login() {
       setLoading(true);
       setError("");
 
-      const API_URL =
-        import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-
-      const response = await fetch(`${API_URL}/auth/login`, {
+      const data = await apiRequest("/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email.trim(),
+        body: {
+          email: formData.email.trim().toLowerCase(),
           password: formData.password,
-        }),
+        },
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Invalid email or password.");
-      }
-
       if (!data.token) {
-        throw new Error("Login response did not contain an authentication token.");
+        throw new Error(
+          "Login response did not contain an authentication token."
+        );
       }
 
-      const storage = rememberMe ? localStorage : sessionStorage;
+      // Update authentication context and storage
+      login(data, rememberMe);
 
-      storage.setItem("petverse_token", data.token);
-
-      if (data.user) {
-        storage.setItem("petverse_user", JSON.stringify(data.user));
-      }
-
+      // Redirect to homepage
       navigate("/");
+
     } catch (err) {
-      setError(err.message || "Something went wrong. Please try again.");
+      console.error("Login error:", err);
+
+      setError(
+        err.message || "Something went wrong. Please try again."
+      );
+
     } finally {
       setLoading(false);
     }
@@ -82,13 +78,17 @@ function Login() {
 
         {/* LEFT SIDE */}
         <div className="login-visual">
+
           <div className="login-brand">
             <span className="brand-icon">🐾</span>
             <span>PetVerse</span>
           </div>
 
           <div className="login-visual-content">
-            <span className="visual-tag">WELCOME TO PETVERSE</span>
+
+            <span className="visual-tag">
+              WELCOME TO PETVERSE
+            </span>
 
             <h1>
               Every pet deserves
@@ -103,6 +103,7 @@ function Login() {
             </p>
 
             <div className="visual-features">
+
               <div>
                 <span>🐶</span>
                 <p>Pet Care</p>
@@ -117,12 +118,14 @@ function Login() {
                 <span>🩺</span>
                 <p>Veterinary</p>
               </div>
+
             </div>
           </div>
 
           <div className="visual-footer">
             Made with ❤️ for every pet lover
           </div>
+
         </div>
 
         {/* RIGHT SIDE */}
@@ -133,23 +136,32 @@ function Login() {
           </div>
 
           <div className="login-form-wrapper">
+
             <div className="login-heading">
-              <span className="welcome-label">WELCOME BACK</span>
+
+              <span className="welcome-label">
+                WELCOME BACK
+              </span>
 
               <h2>Sign in to PetVerse</h2>
 
               <p>
                 Enter your details to access your account.
               </p>
+
             </div>
 
             <form onSubmit={handleSubmit}>
 
               {/* EMAIL */}
               <div className="login-input-group">
-                <label htmlFor="email">Email Address</label>
+
+                <label htmlFor="email">
+                  Email Address
+                </label>
 
                 <div className="login-input-wrapper">
+
                   <span className="input-icon">✉</span>
 
                   <input
@@ -162,14 +174,20 @@ function Login() {
                     autoComplete="email"
                     required
                   />
+
                 </div>
+
               </div>
 
               {/* PASSWORD */}
               <div className="login-input-group">
-                <label htmlFor="password">Password</label>
+
+                <label htmlFor="password">
+                  Password
+                </label>
 
                 <div className="login-input-wrapper">
+
                   <span className="input-icon">🔒</span>
 
                   <input
@@ -190,24 +208,32 @@ function Login() {
                   >
                     {showPassword ? "Hide" : "Show"}
                   </button>
+
                 </div>
+
               </div>
 
               {/* REMEMBER ME */}
               <div className="login-options">
+
                 <label className="remember-label">
+
                   <input
                     type="checkbox"
                     checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
+                    onChange={(e) =>
+                      setRememberMe(e.target.checked)
+                    }
                   />
 
                   <span>Remember me</span>
+
                 </label>
 
                 <span className="forgot-password">
                   Forgot password?
                 </span>
+
               </div>
 
               {/* ERROR */}
@@ -223,8 +249,11 @@ function Login() {
                 className="login-submit-btn"
                 disabled={loading}
               >
+
                 {loading ? "Signing in..." : "Sign In"}
+
                 {!loading && <span>→</span>}
+
               </button>
 
             </form>
@@ -258,3 +287,4 @@ function Login() {
 }
 
 export default Login;
+

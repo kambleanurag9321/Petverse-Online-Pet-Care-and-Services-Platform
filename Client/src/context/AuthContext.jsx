@@ -1,16 +1,31 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
+    try {
+      const savedUser =
+        localStorage.getItem("user") ||
+        sessionStorage.getItem("user");
+
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch (error) {
+      console.error("Error loading user:", error);
+      return null;
+    }
   });
 
-  const login = (data) => {
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+  const login = (data, rememberMe = false) => {
+    const storage = rememberMe ? localStorage : sessionStorage;
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+
+    storage.setItem("token", data.token);
+    storage.setItem("user", JSON.stringify(data.user));
 
     setUser(data.user);
   };
@@ -18,6 +33,8 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
 
     setUser(null);
   };
@@ -34,8 +51,4 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  return useContext(AuthContext);
 };

@@ -33,12 +33,17 @@ export default function Register() {
     setError("");
     setSuccess("");
 
-    if (!formData.name || !formData.email || !formData.password) {
+    const name = formData.name.trim();
+    const email = formData.email.trim().toLowerCase();
+    const password = formData.password;
+    const phone = formData.phone.trim();
+
+    if (!name || !email || !password) {
       setError("Name, email and password are required.");
       return;
     }
 
-    if (formData.password.length < 6) {
+    if (password.length < 6) {
       setError("Password must be at least 6 characters.");
       return;
     }
@@ -48,7 +53,12 @@ export default function Register() {
 
       await apiRequest("/auth/register", {
         method: "POST",
-        body: formData,
+        body: {
+          name,
+          email,
+          password,
+          phone,
+        },
       });
 
       setSuccess("Account created successfully! Redirecting...");
@@ -56,8 +66,11 @@ export default function Register() {
       setTimeout(() => {
         navigate("/login");
       }, 1200);
+
     } catch (err) {
+      console.error("Registration error:", err);
       setError(err.message || "Unable to create account.");
+
     } finally {
       setLoading(false);
     }
@@ -68,6 +81,7 @@ export default function Register() {
 
       {/* LEFT SIDE */}
       <div className="register-visual">
+
         <div className="register-brand">
 
           <div className="register-paw">
@@ -90,6 +104,7 @@ export default function Register() {
           </div>
 
         </div>
+
       </div>
 
       {/* RIGHT SIDE */}
@@ -148,6 +163,7 @@ export default function Register() {
                   value={formData.name}
                   onChange={handleChange}
                   autoComplete="name"
+                  required
                 />
 
               </div>
@@ -173,6 +189,7 @@ export default function Register() {
                   value={formData.email}
                   onChange={handleChange}
                   autoComplete="email"
+                  required
                 />
 
               </div>
@@ -224,6 +241,8 @@ export default function Register() {
                   value={formData.password}
                   onChange={handleChange}
                   autoComplete="new-password"
+                  required
+                  minLength={6}
                 />
 
               </div>
@@ -236,6 +255,7 @@ export default function Register() {
               className="register-submit"
               disabled={loading}
             >
+
               {loading ? (
                 <>
                   <span className="register-spinner"></span>
@@ -247,6 +267,7 @@ export default function Register() {
                   <span>→</span>
                 </>
               )}
+
             </button>
 
           </form>
@@ -274,3 +295,4 @@ export default function Register() {
     </div>
   );
 }
+

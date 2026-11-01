@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { apiRequest } from "../services/api";
+import "./Login.css";
 
-export default function Login() {
+function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -13,14 +11,15 @@ export default function Login() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
-    }));
+    });
 
     setError("");
   };
@@ -37,16 +36,41 @@ export default function Login() {
       setLoading(true);
       setError("");
 
-      const data = await apiRequest("/auth/login", {
+      const API_URL =
+        import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email.trim(),
+          password: formData.password,
+        }),
       });
 
-      login(data);
+      const data = await response.json();
 
-      navigate("/pets");
-    } catch (error) {
-      setError(error.message || "Invalid email or password.");
+      if (!response.ok) {
+        throw new Error(data.message || "Invalid email or password.");
+      }
+
+      if (!data.token) {
+        throw new Error("Login response did not contain an authentication token.");
+      }
+
+      const storage = rememberMe ? localStorage : sessionStorage;
+
+      storage.setItem("petverse_token", data.token);
+
+      if (data.user) {
+        storage.setItem("petverse_user", JSON.stringify(data.user));
+      }
+
+      navigate("/");
+    } catch (err) {
+      setError(err.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -54,193 +78,183 @@ export default function Login() {
 
   return (
     <div className="login-page">
+      <div className="login-container">
 
-      {/* LEFT SIDE */}
-      <div className="login-visual">
+        {/* LEFT SIDE */}
+        <div className="login-visual">
+          <div className="login-brand">
+            <span className="brand-icon">🐾</span>
+            <span>PetVerse</span>
+          </div>
 
-        <div className="login-overlay"></div>
+          <div className="login-visual-content">
+            <span className="visual-tag">WELCOME TO PETVERSE</span>
 
-        <div className="login-brand">
-          <div className="login-paw">🐾</div>
+            <h1>
+              Every pet deserves
+              <br />
+              a <span>loving home.</span>
+            </h1>
 
-          <h1>PetVerse</h1>
+            <p>
+              Connect with fellow pet lovers, discover adorable pets,
+              find veterinary care, and give your furry friends the
+              happiness they deserve.
+            </p>
 
-          <p>
-            A better world for
-            <br />
-            you and your pets.
-          </p>
+            <div className="visual-features">
+              <div>
+                <span>🐶</span>
+                <p>Pet Care</p>
+              </div>
 
-          <div className="login-pets">
-            <span>🐶</span>
-            <span>🐱</span>
-            <span>🐰</span>
-            <span>🐦</span>
+              <div>
+                <span>🏡</span>
+                <p>Adoption</p>
+              </div>
+
+              <div>
+                <span>🩺</span>
+                <p>Veterinary</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="visual-footer">
+            Made with ❤️ for every pet lover
           </div>
         </div>
 
-      </div>
+        {/* RIGHT SIDE */}
+        <div className="login-form-section">
 
-      {/* RIGHT SIDE */}
-      <div className="login-container">
-
-        <div className="login-card">
-
-          <Link to="/" className="login-mobile-logo">
-            🐾 PetVerse
-          </Link>
-
-          <div className="login-header">
-            <span className="welcome-badge">
-              👋 Welcome back
-            </span>
-
-            <h2>Sign in to PetVerse</h2>
-
-            <p>
-              Continue your pet's journey with us.
-            </p>
+          <div className="mobile-brand">
+            <span>🐾</span> PetVerse
           </div>
 
-          {error && (
-            <div className="login-error">
-              <span>⚠️</span>
-              {error}
+          <div className="login-form-wrapper">
+            <div className="login-heading">
+              <span className="welcome-label">WELCOME BACK</span>
+
+              <h2>Sign in to PetVerse</h2>
+
+              <p>
+                Enter your details to access your account.
+              </p>
             </div>
-          )}
 
-          <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
 
-            {/* EMAIL */}
-            <div className="login-field">
+              {/* EMAIL */}
+              <div className="login-input-group">
+                <label htmlFor="email">Email Address</label>
 
-              <label htmlFor="email">
-                Email address
-              </label>
+                <div className="login-input-wrapper">
+                  <span className="input-icon">✉</span>
 
-              <div className="login-input">
-
-                <span>✉️</span>
-
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  autoComplete="email"
-                />
-
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    autoComplete="email"
+                    required
+                  />
+                </div>
               </div>
 
-            </div>
+              {/* PASSWORD */}
+              <div className="login-input-group">
+                <label htmlFor="password">Password</label>
 
-            {/* PASSWORD */}
-            <div className="login-field">
+                <div className="login-input-wrapper">
+                  <span className="input-icon">🔒</span>
 
-              <div className="password-top">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    autoComplete="current-password"
+                    required
+                  />
 
-                <label htmlFor="password">
-                  Password
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+
+              {/* REMEMBER ME */}
+              <div className="login-options">
+                <label className="remember-label">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+
+                  <span>Remember me</span>
                 </label>
 
-                <button
-                  type="button"
-                  className="forgot-btn"
-                  onClick={() =>
-                    alert("Password reset will be added soon.")
-                  }
-                >
+                <span className="forgot-password">
                   Forgot password?
-                </button>
-
+                </span>
               </div>
 
-              <div className="login-input">
+              {/* ERROR */}
+              {error && (
+                <div className="login-error">
+                  {error}
+                </div>
+              )}
 
-                <span>🔒</span>
+              {/* LOGIN BUTTON */}
+              <button
+                type="submit"
+                className="login-submit-btn"
+                disabled={loading}
+              >
+                {loading ? "Signing in..." : "Sign In"}
+                {!loading && <span>→</span>}
+              </button>
 
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  autoComplete="current-password"
-                />
+            </form>
 
-                <button
-                  type="button"
-                  className="show-password"
-                  onClick={() =>
-                    setShowPassword(!showPassword)
-                  }
-                >
-                  {showPassword ? "🙈" : "👁️"}
-                </button>
-
-              </div>
-
+            <div className="login-divider">
+              <span>OR</span>
             </div>
 
-            {/* REMEMBER */}
-            <label className="remember-me">
-
-              <input type="checkbox" />
-
-              <span>
-                Remember me
-              </span>
-
-            </label>
-
-            {/* LOGIN BUTTON */}
-            <button
-              type="submit"
-              className="login-submit"
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <span className="login-spinner"></span>
-                  Signing in...
-                </>
-              ) : (
-                <>
-                  Sign In
-                  <span>→</span>
-                </>
-              )}
-            </button>
-
-          </form>
-
-          <div className="login-divider">
-            <span>OR</span>
-          </div>
-
-          <div className="login-register">
-
-            <p>
+            <p className="register-text">
               Don't have an account?
+
+              <Link to="/register">
+                Create an account
+              </Link>
             </p>
 
-            <Link to="/register">
-              Create an account
+            <Link to="/" className="back-home">
+              ← Back to Home
             </Link>
 
           </div>
 
-          <Link to="/" className="login-home">
-            ← Back to PetVerse
-          </Link>
+          <div className="login-bottom-text">
+            © 2026 PetVerse. All rights reserved.
+          </div>
 
         </div>
-
       </div>
-
     </div>
   );
 }
+
+export default Login;

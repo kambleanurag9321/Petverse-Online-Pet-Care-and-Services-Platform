@@ -1,436 +1,402 @@
 import { Link } from "react-router-dom";
+import "./Home.css";
 
 function Home() {
+  const services = [
+    {
+      icon: "🐕",
+      title: "Pet Care",
+      description:
+        "Discover everything you need to keep your furry friends happy, healthy, and comfortable.",
+      link: "/pets",
+      button: "Explore Pets",
+    },
+    {
+      icon: "🏡",
+      title: "Pet Adoption",
+      description:
+        "Give a homeless animal a second chance at life by finding your perfect companion.",
+      link: "/adoption",
+      button: "Adopt a Pet",
+    },
+    {
+      icon: "🩺",
+      title: "Veterinary Care",
+      description:
+        "Find veterinary information and discover professional healthcare for your pets.",
+      link: "/veterinary",
+      button: "Find Veterinary Care",
+    },
+    {
+      icon: "💬",
+      title: "Pet Community",
+      description:
+        "Connect with fellow pet lovers, share experiences, and learn from other pet parents.",
+      link: "/community",
+      button: "Join Community",
+    },
+  ];
+
+  const categories = [
+    {
+      name: "Dogs",
+      emoji: "🐶",
+      description: "Loyal friends and loving companions",
+    },
+    {
+      name: "Cats",
+      emoji: "🐱",
+      description: "Independent, playful, and adorable",
+    },
+    {
+      name: "Birds",
+      emoji: "🦜",
+      description: "Colorful companions full of life",
+    },
+    {
+      name: "Others",
+      emoji: "🐰",
+      description: "Meet other wonderful little friends",
+    },
+  ];
+
   return (
-    <>
+    <main className="home-page">
+
       {/* HERO SECTION */}
-      <section className="hero">
-        <div className="hero-content">
-          <span className="hero-badge">
-            🐾 Welcome to PetVerse
-          </span>
+      <section className="home-hero">
+        <div className="home-hero-content">
+          <div className="home-badge">
+            <span>🐾</span> WELCOME TO PETVERSE
+          </div>
 
           <h1>
-            Everything Your
-            <span> Pet Deserves.</span>
+            Every Pet Deserves
+            <br />
+            <span>A Loving Home.</span>
           </h1>
 
           <p>
-            A complete digital community for pet lovers.
-            Discover pets, find adoption opportunities,
-            connect with veterinarians, and give your pets
-            the care they deserve.
+            More than just a pet platform. PetVerse brings together pet
+            care, adoption, veterinary services, and a community that
+            understands the love we share with our furry friends.
           </p>
 
-          <div className="hero-buttons">
-            <Link to="/pets" className="primary-btn">
+          <div className="home-hero-buttons">
+            <Link to="/pets" className="home-btn home-btn-primary">
               Explore Pets <span>→</span>
             </Link>
 
-            <Link to="/veterinary" className="secondary-btn">
-              Find a Vet <span>↗</span>
+            <Link to="/adoption" className="home-btn home-btn-outline">
+              Find a Companion
             </Link>
+          </div>
+
+          <div className="home-hero-trust">
+            <div className="home-trust-icons">
+              <span>🐶</span>
+              <span>🐱</span>
+              <span>🐰</span>
+            </div>
+
+            <div>
+              <strong>For Every Pet Lover</strong>
+              <small>Care, connection and companionship.</small>
+            </div>
           </div>
         </div>
 
-        <div className="hero-image">
+        <div className="home-hero-image">
+          <div className="hero-image-bg"></div>
+
           <img
-            src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1000&q=85"
-            alt="Happy golden retriever"
+            src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1000&auto=format&fit=crop&q=85"
+            alt="Happy dog enjoying the outdoors"
           />
 
-          <div className="hero-float-card">
-            <span>♥</span>
+          <div className="hero-floating-card hero-card-top">
+            <span>❤️</span>
             <div>
-              <strong>Made for pet lovers</strong>
-              <small>Care • Connect • Adopt</small>
+              <strong>Spread Love</strong>
+              <small>One paw at a time</small>
             </div>
           </div>
 
-          <span className="hero-sparkle sparkle-one">✦</span>
-          <span className="hero-sparkle sparkle-two">✦</span>
+          <div className="hero-floating-card hero-card-bottom">
+            <span>🐾</span>
+            <div>
+              <strong>Pet Happiness</strong>
+              <small>Our biggest priority</small>
+            </div>
+          </div>
+
+          <div className="hero-decoration">✦</div>
         </div>
       </section>
 
-      {/* FEATURES SECTION */}
-      <section className="features">
-        <div className="section-heading">
-          <span>Why PetVerse?</span>
+      {/* STATISTICS */}
+      <section className="home-stats">
+        <div className="home-stat">
+          <span>🐾</span>
+          <div>
+            <h2>Pet First</h2>
+            <p>Our Philosophy</p>
+          </div>
+        </div>
+
+        <div className="home-stat">
+          <span>❤️</span>
+          <div>
+            <h2>More Love</h2>
+            <p>Every Single Day</p>
+          </div>
+        </div>
+
+        <div className="home-stat">
+          <span>🏡</span>
+          <div>
+            <h2>Better Homes</h2>
+            <p>Through Adoption</p>
+          </div>
+        </div>
+
+        <div className="home-stat">
+          <span>🩺</span>
+          <div>
+            <h2>Better Health</h2>
+            <p>Through Proper Care</p>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section className="home-services">
+        <div className="home-section-heading">
+          <span className="home-eyebrow">WHAT WE OFFER</span>
 
           <h2>
-            Everything your pet needs, in one place.
+            Everything Your Pet
+            <br />
+            <span>Needs in One Place.</span>
           </h2>
 
           <p>
-            PetVerse connects pet owners with the people, services,
-            and community they need to give their pets a better life.
+            From finding a new companion to keeping your existing pets
+            healthy, PetVerse makes pet parenting easier.
           </p>
         </div>
 
-        <div className="feature-grid">
-          <div className="feature-card">
-            <div className="feature-icon">🐾</div>
-            <h3>Discover Pets</h3>
-            <p>
-              Explore different pets, breeds, and pet-friendly
-              resources in one simple platform.
-            </p>
-          </div>
+        <div className="home-service-grid">
+          {services.map((service, index) => (
+            <div className="home-service-card" key={index}>
+              <div className="home-service-icon">{service.icon}</div>
 
-          <div className="feature-card">
-            <div className="feature-icon">🏠</div>
-            <h3>Pet Adoption</h3>
-            <p>
-              Discover pets looking for loving homes and connect
-              with adoption opportunities.
-            </p>
-          </div>
+              <h3>{service.title}</h3>
 
-          <div className="feature-card">
-            <div className="feature-icon">🩺</div>
-            <h3>Veterinary Care</h3>
-            <p>
-              Find veterinary services and useful information to
-              help keep your pet healthy.
-            </p>
-          </div>
+              <p>{service.description}</p>
 
-          <div className="feature-card">
-            <div className="feature-icon">💬</div>
-            <h3>Pet Community</h3>
-            <p>
-              Connect with other pet lovers, share experiences,
-              and build a community around your pets.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* PET TYPES SECTION */}
-      <section className="pet-types">
-        <div className="section-heading">
-          <span>Explore Pets</span>
-
-          <h2>Find your perfect companion.</h2>
-
-          <p>
-            Explore different types of pets and discover everything
-            you need to know about caring for them.
-          </p>
-        </div>
-
-        <div className="pet-type-grid">
-          {[
-            ["🐶", "Dogs", "Loyal companions full of love and energy."],
-            ["🐱", "Cats", "Independent, playful, and affectionate companions."],
-            ["🐰", "Rabbits", "Gentle and adorable pets for loving homes."],
-            ["🐦", "Birds", "Colorful, intelligent, and fascinating companions."],
-            ["🐹", "Small Pets", "Discover hamsters, guinea pigs, and other small pets."],
-            ["🐠", "Fish", "Create a beautiful underwater world in your home."]
-          ].map(([icon, name, description]) => (
-            <div className="pet-type-card" key={name}>
-              <div className="pet-type-icon">{icon}</div>
-              <h3>{name}</h3>
-              <p>{description}</p>
-
-              <Link to="/pets" className="pet-type-link">
-                Explore {name} →
+              <Link to={service.link} className="home-service-link">
+                {service.button} <span>→</span>
               </Link>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ADOPTION SECTION */}
-      <section className="adoption">
-        <div className="section-heading">
-          <span>Pet Adoption</span>
+      {/* PET CATEGORIES */}
+      <section className="home-categories">
+        <div className="home-category-heading">
+          <div>
+            <span className="home-eyebrow">MEET YOUR COMPANION</span>
+            <h2>Find Your Perfect Friend.</h2>
+            <p>
+              Every animal has a unique personality. Discover the
+              companion that matches your lifestyle.
+            </p>
+          </div>
 
-          <h2>Meet pets looking for a home.</h2>
-
-          <p>
-            Every pet deserves a loving family. Discover pets available
-            for adoption and find your new best friend.
-          </p>
+          <Link to="/pets" className="home-text-link">
+            Explore All Pets →
+          </Link>
         </div>
 
-        <div className="adoption-grid">
-          {[
-            {
-              name: "Buddy",
-              breed: "Golden Retriever",
-              age: "2 Years",
-              location: "Mumbai",
-              gender: "♂",
-              icon: "🐶"
-            },
-            {
-              name: "Luna",
-              breed: "Persian Cat",
-              age: "1 Year",
-              location: "Navi Mumbai",
-              gender: "♀",
-              icon: "🐱"
-            },
-            {
-              name: "Coco",
-              breed: "Holland Lop",
-              age: "8 Months",
-              location: "Thane",
-              gender: "♀",
-              icon: "🐰"
-            },
-            {
-              name: "Rio",
-              breed: "Budgerigar",
-              age: "1 Year",
-              location: "Mumbai",
-              gender: "♂",
-              icon: "🐦"
-            }
-          ].map((pet) => (
-            <div className="pet-card" key={pet.name}>
-              <div className="pet-card-image">
-                {pet.icon}
+        <div className="home-category-grid">
+          {categories.map((category, index) => (
+            <Link
+              to="/pets"
+              className={`home-category-card category-${index + 1}`}
+              key={index}
+            >
+              <div className="category-emoji">{category.emoji}</div>
 
-                <button
-                  className="favorite-btn"
-                  aria-label={`Favorite ${pet.name}`}
-                >
-                  ♡
-                </button>
-              </div>
+              <h3>{category.name}</h3>
 
-              <div className="pet-card-content">
-                <div className="pet-card-header">
-                  <h3>{pet.name}</h3>
-                  <span className="status">Available</span>
-                </div>
+              <p>{category.description}</p>
 
-                <p className="pet-breed">{pet.breed}</p>
-
-                <div className="pet-info">
-                  <span>{pet.gender} {pet.age}</span>
-                  <span>📍 {pet.location}</span>
-                </div>
-
-                <Link to="/pets" className="profile-btn">
-                  View Pets
-                </Link>
-              </div>
-            </div>
+              <span className="category-arrow">↗</span>
+            </Link>
           ))}
         </div>
+      </section>
 
-        <div className="adoption-action">
-          <Link to="/pets" className="primary-btn">
-            View All Pets →
+      {/* ADOPTION SECTION */}
+      <section className="home-adoption">
+        <div className="home-adoption-image">
+          <img
+            src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1000&auto=format&fit=crop&q=85"
+            alt="Two happy dogs together"
+            loading="lazy"
+          />
+
+          <div className="adoption-image-label">
+            <span>❤️</span> Love Changes Everything
+          </div>
+        </div>
+
+        <div className="home-adoption-content">
+          <span className="home-eyebrow">GIVE THEM A SECOND CHANCE</span>
+
+          <h2>
+            Don't Shop.
+            <br />
+            <span>Adopt Love.</span>
+          </h2>
+
+          <p>
+            Thousands of animals need a safe place to call home.
+            Adoption is more than bringing a pet home. It is giving
+            another living being a chance to experience love, safety,
+            and happiness.
+          </p>
+
+          <div className="adoption-benefits">
+            <div>
+              <span>✓</span>
+              Give an animal a loving home
+            </div>
+
+            <div>
+              <span>✓</span>
+              Make a meaningful difference
+            </div>
+
+            <div>
+              <span>✓</span>
+              Find a lifelong companion
+            </div>
+          </div>
+
+          <Link to="/adoption" className="home-btn home-btn-primary">
+            Explore Adoption <span>→</span>
           </Link>
         </div>
       </section>
 
       {/* VETERINARY SECTION */}
-      <section className="veterinary">
-        <div className="vet-container">
-          <div className="vet-content">
-            <span className="vet-badge">
-              🩺 Pet Healthcare
-            </span>
+      <section className="home-vet">
+        <div className="home-vet-content">
+          <span className="home-eyebrow">HEALTHY PETS, HAPPY LIVES</span>
 
-            <h2>
-              Professional care for
-              <span> healthier pets.</span>
-            </h2>
+          <h2>
+            Because Their
+            <br />
+            Health Matters.
+          </h2>
 
-            <p>
-              Find veterinary services, book appointments, and keep track
-              of your pet's healthcare needs — all from PetVerse.
-            </p>
+          <p>
+            Your pet deserves the best healthcare. Learn about
+            vaccinations, routine checkups, dental care, and
+            veterinary services.
+          </p>
 
-            <div className="vet-features">
-              <div className="vet-feature">
-                <div className="vet-icon">🔎</div>
-                <div>
-                  <h3>Find Veterinarians</h3>
-                  <p>Discover veterinary professionals near you.</p>
-                </div>
-              </div>
+          <Link to="/veterinary" className="home-btn home-btn-light">
+            Explore Veterinary Care →
+          </Link>
+        </div>
 
-              <div className="vet-feature">
-                <div className="vet-icon">📅</div>
-                <div>
-                  <h3>Book Appointments</h3>
-                  <p>Schedule veterinary visits with ease.</p>
-                </div>
-              </div>
+        <div className="home-vet-image">
+          <img
+            src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=900&auto=format&fit=crop&q=85"
+            alt="Veterinarian caring for a dog"
+            loading="lazy"
+          />
 
-              <div className="vet-feature">
-                <div className="vet-icon">💊</div>
-                <div>
-                  <h3>Health Records</h3>
-                  <p>Keep your pet's important health information organized.</p>
-                </div>
-              </div>
-            </div>
-
-            <Link to="/veterinary" className="primary-btn">
-              Find a Veterinarian →
-            </Link>
-          </div>
-
-          <div className="vet-visual">
-            <div className="vet-circle">🩺</div>
-
-            <div className="vet-card-small">
-              <span>❤️</span>
-              <div>
-                <strong>Pet Health</strong>
-                <p>Care made simple</p>
-              </div>
-            </div>
-          </div>
+          <div className="vet-floating-icon">🩺</div>
         </div>
       </section>
 
-      {/* COMMUNITY SECTION */}
-      <section className="community">
-        <div className="section-heading">
-          <span>PetVerse Community</span>
+      {/* COMMUNITY */}
+      <section className="home-community">
+        <div className="community-image">
+          <img
+            src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=900&auto=format&fit=crop&q=85"
+            alt="Person spending time with a dog"
+            loading="lazy"
+          />
+        </div>
 
-          <h2>Connect with fellow pet lovers.</h2>
+        <div className="community-content">
+          <span className="home-eyebrow">MORE THAN JUST PETS</span>
+
+          <h2>
+            A Community
+            <br />
+            That Understands.
+          </h2>
 
           <p>
-            Share your pet's journey, ask questions, exchange advice,
-            and connect with a growing community of pet owners.
+            Being a pet parent comes with countless questions,
+            experiences, and memorable moments. Connect with people
+            who share your passion for animals.
           </p>
-        </div>
 
-        <div className="community-grid">
-          {[
-            {
-              avatar: "👨🏻",
-              name: "Rahul Sharma",
-              time: "2 hours ago",
-              message:
-                "My Golden Retriever finally learned how to sit on command! 🐶❤️ It took a few weeks, but the training is paying off.",
-              likes: 24,
-              comments: 8
-            },
-            {
-              avatar: "👩🏻",
-              name: "Priya Patel",
-              time: "5 hours ago",
-              message:
-                "Does anyone have recommendations for healthy homemade treats for cats? 🐱 Looking for something Luna will love!",
-              likes: 18,
-              comments: 12
-            },
-            {
-              avatar: "👨🏻",
-              name: "Arjun Mehta",
-              time: "Yesterday",
-              message:
-                "Adopted this little guy last week! 🐾 Thank you PetVerse community for helping me find my new best friend.",
-              likes: 42,
-              comments: 15
-            }
-          ].map((post) => (
-            <div className="community-post" key={post.name}>
-              <div className="post-header">
-                <div className="post-avatar">{post.avatar}</div>
-
-                <div>
-                  <h3>{post.name}</h3>
-                  <span>{post.time}</span>
-                </div>
-              </div>
-
-              <p className="post-text">{post.message}</p>
-
-              <div className="post-actions">
-                <button>❤️ {post.likes} Likes</button>
-                <button>💬 {post.comments} Comments</button>
-              </div>
+          <div className="community-features">
+            <div>
+              <span>💬</span>
+              Share your experiences
             </div>
-          ))}
-        </div>
 
-        <div className="community-action">
-          <Link to="/community" className="primary-btn">
-            Join PetVerse Community →
+            <div>
+              <span>🐾</span>
+              Connect with pet lovers
+            </div>
+
+            <div>
+              <span>📚</span>
+              Learn and grow together
+            </div>
+          </div>
+
+          <Link to="/community" className="home-btn home-btn-primary">
+            Join Our Community →
           </Link>
         </div>
       </section>
 
       {/* FINAL CTA */}
-      <section className="final-cta">
-        <div className="cta-content">
-          <span>🐾 Your pet deserves the best.</span>
+      <section className="home-final-cta">
+        <div className="cta-paw cta-paw-one">🐾</div>
+        <div className="cta-paw cta-paw-two">🐾</div>
 
-          <h2>
-            Join the PetVerse community today.
-          </h2>
+        <span>YOUR PET JOURNEY STARTS HERE</span>
 
-          <p>
-            Discover pets, find adoption opportunities, connect with
-            veterinarians, and meet fellow pet lovers.
-          </p>
+        <h2>
+          Every Paw Has a Story.
+          <br />
+          <strong>Let's Make It Beautiful.</strong>
+        </h2>
 
-          <div className="cta-buttons">
-            <Link to="/register" className="cta-primary">
-              Get Started →
-            </Link>
+        <p>
+          Explore PetVerse today and discover a world built around
+          the love and happiness of animals.
+        </p>
 
-            <Link to="/pets" className="cta-secondary">
-              Explore PetVerse
-            </Link>
-          </div>
-        </div>
+        <Link to="/pets" className="home-btn home-btn-white">
+          Get Started <span>→</span>
+        </Link>
       </section>
 
-      {/* FOOTER */}
-      <footer className="footer">
-        <div className="footer-container">
-          <div className="footer-brand">
-            <div className="footer-logo">
-              🐾 PetVerse
-            </div>
-
-            <p>
-              A complete digital community built to make
-              life better for pets and their owners.
-            </p>
-          </div>
-
-          <div className="footer-column">
-            <h3>Explore</h3>
-            <Link to="/pets">Pets</Link>
-            <Link to="/pets">Adoption</Link>
-            <Link to="/veterinary">Veterinary</Link>
-            <Link to="/community">Community</Link>
-          </div>
-
-          <div className="footer-column">
-            <h3>PetVerse</h3>
-            <Link to="/">Home</Link>
-            <Link to="/register">Join Us</Link>
-            <Link to="/login">Login</Link>
-          </div>
-
-          <div className="footer-column">
-            <h3>Connect</h3>
-            <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram</a>
-            <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">Facebook</a>
-            <a href="mailto:contact@petverse.com">Email Us</a>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p>© 2026 PetVerse. All rights reserved.</p>
-          <p>Made with ❤️ for pets and pet lovers.</p>
-        </div>
-      </footer>
-    </>
+    </main>
   );
 }
 
